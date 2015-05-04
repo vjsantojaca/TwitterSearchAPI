@@ -10,26 +10,29 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class TwitterSearch {
-
-    public TwitterSearch() {
+	
+	public List<Tweet> tweets;
+    
+	public TwitterSearch() {
 
     }
 
-    public abstract boolean saveTweets(List<Tweet> tweets);
+    //public abstract boolean saveTweets(List<Tweet> tweets);
 
-    public void search(final String query, final long rateDelay, final String urlSearchTwitter) throws InvalidQueryException {
+    public void search(final String query, final long rateDelay, final String urlSearchTwitter, int numRep) throws InvalidQueryException {
         TwitterResponse response;
+        tweets = new ArrayList<Tweet>();
         String scrollCursor = null;
         URL url = constructURL(query, scrollCursor, urlSearchTwitter);
         boolean continueSearch = true;
-        Logger.getLogger("TwitterSearch").log(Level.INFO, "La url es: " + url.toString());
-        while((response = executeSearch(url))!=null && response.isHas_more_items() && continueSearch) {
-            continueSearch = saveTweets(response.getTweets());
+        int rep = 0;
+        while((response = executeSearch(url))!=null && response.isHas_more_items() && continueSearch && numRep > rep) {
+        	rep ++;
+            tweets.addAll( response.getTweets() );
             scrollCursor = response.getScroll_cursor();
             try {
                 Thread.sleep(rateDelay);

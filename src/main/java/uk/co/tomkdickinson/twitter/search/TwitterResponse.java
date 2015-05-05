@@ -131,13 +131,15 @@ public class TwitterResponse {
                 retweets = Integer.parseInt(el.select("span.ProfileTweet-action--retweet > span.ProfileTweet-actionCount")
                         .attr("data-tweet-stat-count"));
             } catch(NullPointerException | NumberFormatException e) {
-                e.printStackTrace();
+                retweets = 0;
+                //e.printStackTrace();
             }
             try {
                 favourites = Integer.parseInt(el.select("span.ProfileTweet-action--favorite > span.ProfileTweet-actionCount")
                         .attr("data-tweet-stat-count"));
             } catch (NullPointerException | NumberFormatException e) {
-                e.printStackTrace();
+                favourites = 0;
+                //e.printStackTrace();
             }
             Tweet tweet = new Tweet(
                     id,

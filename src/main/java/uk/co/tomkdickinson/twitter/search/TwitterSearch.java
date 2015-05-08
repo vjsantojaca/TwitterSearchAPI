@@ -12,6 +12,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 public abstract class TwitterSearch {
 	
@@ -41,6 +43,7 @@ public abstract class TwitterSearch {
             }
             url = constructURL(query, scrollCursor, urlSearchTwitter);
         }
+        //Logger.getLogger(TwitterSearch.class.getName()).log(Level.INFO, "Los tweets obtenidos son: " + tweets.toString());
     }
 
     public static TwitterResponse executeSearch(final URL url) {
@@ -63,6 +66,7 @@ public abstract class TwitterSearch {
 
     public final static String TYPE_PARAM = "f";
     public final static String QUERY_PARAM = "q";
+    public final static String SRC_PARAM ="src";
     public final static String SCROLL_CURSOR_PARAM = "scroll_cursor";
     public final static String TWITTER_SEARCH_URL = "https://twitter.com/i/search/timeline";
 
@@ -80,9 +84,11 @@ public abstract class TwitterSearch {
             }
             uriBuilder.addParameter(QUERY_PARAM, query);
             uriBuilder.addParameter(TYPE_PARAM, "realtime");
+            uriBuilder.addParameter(SRC_PARAM, "sprv");
             if (scrollCursor != null) {
                 uriBuilder.addParameter(SCROLL_CURSOR_PARAM, scrollCursor);
             }
+            //Logger.getLogger(TwitterSearch.class.getName()).log(Level.INFO, "La url es la siguiente: " + uriBuilder.build().toURL().toString());
             return uriBuilder.build().toURL();
         } catch(MalformedURLException | URISyntaxException e) {
             e.printStackTrace();

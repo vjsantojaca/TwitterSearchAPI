@@ -7,6 +7,8 @@ import org.jsoup.nodes.Element;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 public class TwitterResponse {
 
@@ -151,7 +153,10 @@ public class TwitterResponse {
                     retweets,
                     favourites
             );
+            
             if (tweet.getId() != null) {
+            	new TwitterScrapingUser().scrapingUser(tweet);
+            	//Logger.getLogger(TwitterResponse.class.getName()).log(Level.INFO, "Tweet: " + tweet);
                 tweets.add(tweet);
             }
         }

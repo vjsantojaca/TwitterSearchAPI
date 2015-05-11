@@ -35,10 +35,10 @@ public class TwitterScrapingUser
 			if( elementGeo != null ) tweet.setUserGeo( elementGeo.text() );
 			
 			Element elementFollowing = doc.select("li.ProfileNav-item--following a span.ProfileNav-value").first();
-			tweet.setUserFollowing( Integer.parseInt(elementFollowing.text().replace(".", "").replace(",", "").replace("K", "000").replace("M", "000000")) );
+			if( elementFollowing != null ) tweet.setUserFollowing( Integer.parseInt(elementFollowing.text().replace(".", "").replace(",", "").replace("K", "000").replace("M", "000000")) );
 			
 			Element elementFollowers = doc.select("li.ProfileNav-item--followers a span.ProfileNav-value").first();
-			tweet.setUserFollowers( Integer.parseInt(elementFollowers.text().replace(".", "").replace(",", "").replace("K", "000").replace("M", "000000")) );
+			if( elementFollowers != null ) tweet.setUserFollowers( Integer.parseInt(elementFollowers.text().replace(".", "").replace(",", "").replace("K", "000").replace("M", "000000")) );
 		
 		} catch (IOException e) {
 			e.printStackTrace();

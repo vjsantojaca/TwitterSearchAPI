@@ -23,10 +23,10 @@ public class TwitterScrapingUser
 //			Logger.getLogger(TwitterResponse.class.getName()).log(Level.INFO, "El usuario es: " + tweet.getUserUrl());
 			Document doc = Jsoup.parse(new URL(tweet.getUserUrl()), 3000);
 			Element elementImg = doc.select("img.ProfileAvatar-image").first();
-			tweet.setUserImage( elementImg.attr("src") );
+			if( elementImg != null ) tweet.setUserImage( elementImg.attr("src") );
 			
 			Element elementBio = doc.select("p.ProfileHeaderCard-bio").first();
-			tweet.setUserDescription( elementBio.text() );
+			if( elementBio != null ) tweet.setUserDescription( elementBio.text() );
 			
 			Element elementUrlBio = doc.select("span.ProfileHeaderCard-urlText a").first();
 			if( elementUrlBio != null ) tweet.setUserPersonalUrl( elementUrlBio.attr("title") );
